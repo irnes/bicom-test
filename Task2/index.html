@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Task 2</title>
+	<style type="text/css">
+		body{
+		  background-color:#F1F1F1;
+		  font-size:12px;
+		  font-family:Verdana, Arial, Helvetica, sans-serif;
+		}
+		
+		#outer{
+		  width: 70%;
+		  margin-top: 10px;
+		  margin-bottom: 10px;
+		  margin-left: auto;
+		  margin-right: auto;
+		  border: thin ouset #000000;
+		  padding: 2px;
+		  background-color: inherit;
+		}
+		
+		#taskDecription {
+		  margin: 5px;
+		  padding: 10px;
+		  background-color: white;
+		  border-radius: 10px;
+		  -moz-border-radius: 15px;
+		  -webkit-border-radius: 15px;
+		  box-shadow: 0 0 10px #888; 
+		  -moz-box-shadow: 0 0 10px #888;
+		  -webkit-box-shadow: 0 0 10px #888;
+		}
+		
+		#tableContainer {
+		  margin: 5px;
+		  padding: 10px;
+		  background-color: white;
+		  border-radius: 10px;
+		  -moz-border-radius: 15px;
+		  -webkit-border-radius: 15px;
+		  box-shadow: 0 0 10px #888; 
+		  -moz-box-shadow: 0 0 10px #888;
+		  webkit-box-shadow: 0 0 10px #888;
+		}
+		
+		table.niceTable {
+		  margin: 5px;
+		  padding: 2px;
+		  border-collapse: collapse;
+		  background-color: #8EA2D0;
+	   }
+	
+		table.niceTable th, table.niceTable td {
+	   	  border-width: medium;
+		  border-style: solid;
+		  border-color: white;
+		  color: white;
+		  padding: 5px 20px;
+		}
+		
+		table.niceTable tr.rEven td {
+		  background-color: #E4E4E4;
+		  color: black;
+		}
+		
+		table.niceTable tr.rOdd td {
+		  background-color: #F1F2F1;
+		  color: black;
+		}
+		
+		table.niceTable tr:hover td	{ 
+		  background-color: cornflowerblue;
+		  color: black;
+		} 
+		
+		a {
+	      font-size: 14px;
+	      text-decoration: none;
+	      color: #03F;
+	    }
+	
+		a:hover {
+		  text-decoration: underline;
+		  color: #FFF;
+		}
+	</style>
+</head>
+<body>
+	<div id="outer">
+	<!-- Task Description -->
+		<div id="taskDecription">
+		<h1>Task 2 (JavaScript/CSS) - Irnes Mujkanović</h1><hr/>
+		<!-- Task Description -->
+		Make a table with 3 columns: <br/>&nbsp;
+		<table border="1">
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>E-Mail</th>
+		</tr>
+		</table>
+			<ul>
+			<li>Fill it with some random data (from JavaScript)</li>
+			<li>E-mail must be clickable anchor.</li>
+			<li>Each row must have hover effect (say mouse moves over - it is some other colour)</li>
+			<li>Make it so that each row has different background colour (odd/even rows)</li>
+			<li>Style it nicely.</li>
+			</ul>
+		<hr/>
+		</div>
+    <!-- Placeholder for the table -->
+    <div id="tableContainer"></div>
+    
+	  <!-- Create table with JS --> 
+    <script type="text/javascript">
+		  window.onload = createTable;
+
+			function createTable(){
+			  // Declare variables and create table elements
+			  var myTable = document.createElement('table');
+			  var myTHead = document.createElement('thead');
+			  var myTBody = document.createElement('tbody');
+			  var oRow, oCell;
+			  // Declare table column headers
+			  var heading = new Array("ID","Name","E-Mail");
+			  // Prepare random data to fill table
+			  var tableContent = new Array();
+			  for(var i=0; i<10; i++){
+				var id = 1001 + i;
+				var name = "user" + id;
+				var eMail =  name + "@mail.com"
+				tableContent[i] = new Array(id, name, eMail);
+			  }
+			  // Insert the created table elments into myTable
+			  myTable.appendChild(myTHead);
+			  myTable.appendChild(myTHead);
+			  myTable.appendChild(myTBody);
+			  // Set the table's attributes
+			  myTable.setAttribute("class","niceTable");
+			  // Insert a row into the header
+			  oRow = document.createElement("tr");
+			  myTHead.appendChild(oRow);
+			  // Create and insert cells into the header row
+			  for(var i=0; i<heading.length; i++){
+				oCell = document.createElement("th");
+				oCell.innerHTML = heading[i];
+				oRow.appendChild(oCell);
+			  }
+			  // Insert rows and cells into body
+			  for(var i=0; i<tableContent.length; i++){
+				// Create row and set the class attribute in order to alternate row color
+				  oRow = document.createElement("tr");
+				  myTBody.appendChild(oRow);
+				var classAttr = "rOdd";
+				if((i % 2) == 0) classAttr = "rEven";
+				oRow.setAttribute("class", classAttr);
+				// Insert cells into row
+				for(var j=0; j<tableContent[i].length; j++){
+				  oCell = document.createElement("td");
+				  // If column header is E-Mail, make clickable anchor
+				  if(heading[j] == "E-Mail"){
+				    var mailtoElem = document.createElement("a"); 
+				    mailtoElem.setAttribute('href', "mailto:" + tableContent[i][j]);
+				    mailtoElem.innerHTML = tableContent[i][j];
+				    oCell.appendChild(mailtoElem);
+				  }else{
+				    oCell.innerHTML = tableContent[i][j];
+				  } 
+				  oRow.appendChild(oCell);
+			    }
+			  }
+			  // Insert the table into the prepared place holder
+			  document.getElementById('tableContainer').appendChild(myTable);
+			}
+		</script>
+	</div>
+</body>
+</html>
